@@ -1,0 +1,18 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+.nav-item{
+	margin: 20px;
+}
+
+.container {
+/*/*  margin: 0 auto;*/
+ /* padding: 40px;*/*/
+  width: 0%;
+  color: #333;
+ /* background: #;*/
+}
+
