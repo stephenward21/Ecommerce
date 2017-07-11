@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 
 class SimpleSlider extends Component {
@@ -9,17 +11,18 @@ class SimpleSlider extends Component {
       infinite: true,
       speed: 500,
       slidesToShow: 1,
-      slidesToScroll: 1
+      slidesToScroll: 1,
+      autoplay: true
     };
     return (
-      <div className="container">
+      <div className="container-fluid">
         <Slider {...settings}>
-          <div><img src="http://files1.porsche.com/filestore/image/multimedia/none/991-2nd-tu-detail-concept-character-xle/preview/9f659197-71a8-11e5-b52e-0019999cd470/porsche-preview.jpg"/></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
+          <div><img src="/images/ferrari.jpg"/></div>
+          <div><img src="/images/train1.jpg"/></div>
+          <div><img src="/images/schooner.jpg"/></div>
+          <div><img src="/images/harley.jpg"/></div>
+          <div><img src="/images/chevy-deluxe-coupe.jpg"/></div>
+          <div><img src="/images/lamb.jpg"/></div>
         </Slider>
       </div>
       
