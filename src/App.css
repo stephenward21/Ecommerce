@@ -2,6 +2,7 @@
   text-align: center;
 }
 
+
 .main{
   margin-top: 60px;
 }
@@ -20,6 +21,10 @@
 
 .dropdown:hover .dropdown-links{
   display: block;
+}
+
+.slick-image img{
+    width: 100vw;
 }
 
 .dropdown-links a{
@@ -45,6 +50,23 @@
   top: 80px;
 }
 
+.dropdown-links a:nth-child(4){
+  top: 100px;
+}
+
+.dropdown-links a:nth-child(5){
+  top: 120px;
+}
+
+.dropdown-links a:nth-child(6){
+  top: 140px;
+}
+
+.dropdown-links a:nth-child(7){
+  top: 160px;
+}
+
+
 .dropdown-links a:hover{
   color: black;
   text-decoration: none;
@@ -62,13 +84,48 @@ i {
     -webkit-transform: rotate(45deg);
 }
 
+form {
+  display: inline-block;
+}
+
 .register {
-  margin-top: 50px;
-  margin-bottom: 30px;
+  margin-top: 100px;
+  text-align: center;
+  /*margin-bottom: 30px;*/
+
+}
+
+.login {
+  display: block;
+  /*text-align: center;*/
+  margin-top: 100px;
+  background-color: #f8f8f8
+}
+
+.form-control{
+  width: 1000px;
+  margin: auto;
+}
+
+.form-group{
+  margin-top: 20px;
+}
+
+.registercontainer {
+  background-color: #f8f8f8;
 }
 
 .container {
   display: block;
+}
+
+input{
+  margin-bottom: 100px;
+}
+
+.login-form {
+  margin-top: 100px;
+  background-color: #f8f8f8
 }
 
 input, label, .terms, button {

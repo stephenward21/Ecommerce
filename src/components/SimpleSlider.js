@@ -15,13 +15,11 @@ class SimpleSlider extends Component {
       autoplay: true
     };
     return (
-      <div className="container-fluid">
+      <div >
         <Slider {...settings}>
           <div><img src="/images/ferrari.jpg"/></div>
           <div><img src="/images/train1.jpg"/></div>
           <div><img src="/images/schooner.jpg"/></div>
-          <div><img src="/images/harley.jpg"/></div>
-          <div><img src="/images/chevy-deluxe-coupe.jpg"/></div>
           <div><img src="/images/lamb.jpg"/></div>
         </Slider>
       </div>
