@@ -10,40 +10,24 @@ class NavBar extends Component{
 			productlines: []
 		}
 	}
-
 	componentDidMount() {
-		// go get all productlines from the DB.
 		$.getJSON(window.hostAddress+'/productlines/get',(productlinesData)=>{
-			console.log(productlinesData);
+			console.log(productlinesData)
 			this.setState({
 				productlines: productlinesData
 			})
+			
 		})
+		
 	}
-
   render(){
-  	// Temp var to store our <link>
   	const shopMenu = [];
-  	// Map through this.state.productlines. First render, will not loop (because array is empty)
-  	this.state.productlines.map((pl,index)=>{
-  		console.log(pl)
+  	this.state.productlines.map((productline,index)=>{
   		shopMenu.push(
-  			<Link key={index} to={`/shop/${pl.link}`}>{pl.productLine}</Link>
+  			<Link key={index} to={`/shop/${productline.productLine}`} >{productline.productLine}</Link>
   		)
-  	})
-	
-	if(this.props.registerInfo.name == undefined){
-		var rightBar = [
-			<li key="1" className="text-right"><Link to="/login">Login</Link></li>,
-			<li key="2" className="text-right"><Link to="/register">Register</Link></li>,
-			<li key="3" className="text-right"><Link to="/cart">(0) items in your cart | ($0.00)</Link></li>		
-		]
-	}else{
-		var rightBar = [
-			<li key="1" className="text-right">Welcome, {this.props.registerInfo.name}</li>,
-			<li key="2" className="text-right"><Link to="/cart">(0) items in your cart | ($0.00)</Link></li>		
-		]		
-	}
+
+  	});
 
     return(
     	<div>
@@ -55,7 +39,6 @@ class NavBar extends Component{
 			      		<Link to="/shop"><i className="arrow down" /> Shop</Link>
 			      		<ul>
 				      		<li className="dropdown-links">
-				      			{/* Drop in the array of <Link> created above */}
 				      			{shopMenu}
 				      		</li>
 				      	</ul>
@@ -69,21 +52,16 @@ class NavBar extends Component{
 			    	<Link to="/" className="navbar-brand">ClassicModels</Link>
 			    </div>
 				   <ul className="nav navbar-nav float-right">
-				   		{rightBar}
+				      <li className="text-right"><Link to="/login">Login</Link></li>
+				      <li className="text-right"><Link to="/register">Register</Link></li>
+				      <li className="text-right"><Link to="/cart">(0) items in your cart | ($0.00)</Link></li>
 				   </ul>
 			  </div>
 			</nav>
-	        <Route exact path="/" component={Slick} />
+	        <Route exact path="/" component={SimpleSlider} />
         </div>
 	)
   }
 }
 
-function mapStateToProps(state){
-	return{
-		registerInfo: state.registerReducer
-	}
-}
-
-// export default NavBar
-export default connect(mapStateToProps)(NavBar)
+export default NavBar

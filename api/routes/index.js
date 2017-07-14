@@ -87,20 +87,41 @@ router.post('/register', (req,res)=>{
 		}
 	)
 
-	// var insertQuery = "INSERT INTO users (username,password) VALUES (?,?)";
-	// connection.query(insertQuery, [name,password],(error,results)=>{
-	// 	if(error){
-	// 		res.json({
-	// 			msg: error
-	// 		})
-	// 	}else{
-	// 		res.json({
-	// 			msg: "userInserted"
-	// 		})
-	// 	}
-
-	// });
-
 })
+
+router.post('/login', (req,res)=>{
+	var userName = req.body.username;
+	var password = req.body.password;
+	var checkLoginQuery = "SELECT * FROM users WHERE username = ?"
+	connection.query(checkLoginQuery, [username], (error,results)=>{
+		if(error) throw error;
+		if(results.length == 0){
+			res.json({
+				msg: "badUsername"
+			})
+		}else{
+			var checkHash = bcrypt.compareSync(password, results[0].password);
+			if(checkHash){
+				const updateToken = `Update users SET token=?, token_exp=DATE_ADD(NOW(), INTERVAL 1 HOUR)`
+				var token = randToken.uid(40);
+				connection.query(updateToken, [token], (results2, error2)=>{
+					res.json({
+						msg:'loginSuccess',
+						name: results[0].name,
+						token: token
+					})
+				})
+
+			}else{
+				res.json({
+					msg: "wrongPassword"
+				})
+			}
+		}
+
+	})
+})
+
+
 
 module.exports = router;
