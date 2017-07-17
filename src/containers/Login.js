@@ -46,7 +46,7 @@ class Login extends Component{
 			}) 
 		// console.log(salesRep)
 		}else{
-			this.props.registerAction({
+			this.props.loginAction({
 				username: userName,
 				password: password,
 			
