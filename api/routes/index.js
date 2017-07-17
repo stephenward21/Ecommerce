@@ -76,7 +76,6 @@ router.post('/register', (req,res)=>{
 				console.log(error)
 				console.log(results)
 				const newId = results.insertId
-				var userNameCheck = "SELECT * FROM users WHERE username = " + userName;
 				var curTimeStamp = Date.now() / 1000;
 				var token = randToken.uid(40);
 				var insertQuery = "INSERT INTO users (uid,name,username,email,password,created,token) VALUES (?,?,?,?,?,?,?)"

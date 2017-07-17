@@ -107,8 +107,13 @@ class Register extends Component{
 				    <label><b>State</b></label>
 				    <input type="text" className="form-control" id="exampleState" aria-describedby="stateHelp" placeholder="State"/>
 
-				    <label><b>Sales Rep</b></label>
-				    <input type="text" className="form-control" id="exampleRep" aria-describedby="repHelp" placeholder="Enter sales rep"/>
+				    <label for="sell">Select Sales Rep</label>
+				    <select className="form-control" id="sell">
+				    	<option>1</option>
+				    	<option>2</option>
+				    	<option>3</option>
+				    	<option>4</option>
+				    </select>
 
 				    <input type="checkbox"  /> Remember me
 				    <p className="terms">By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
