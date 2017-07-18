@@ -1,8 +1,7 @@
-import React, {Component} from 'react';
-import {Link, Route} from 'react-router-dom';
-
-import $ from 'jquery';
-import { connect } from 'react-redux';
+import React, {Component} from 'react'
+import { Link } from 'react-router-dom'
+import $ from 'jquery'
+import { connect } from 'react-redux'
 
 class NavBar extends Component{
 	constructor(props) {
@@ -15,19 +14,31 @@ class NavBar extends Component{
 	componentDidMount() {
 		// go get all productlines from the DB.
 		$.getJSON(window.hostAddress+'/productlines/get',(productlinesData)=>{
-			console.log(productlinesData);
+			// console.log(productlinesData);
 			this.setState({
 				productlines: productlinesData
-			})
-		})
+			});
+		});
 	}
 
   render(){
+  	console.log(this.props.cartInfo)
+  	if(this.props.cartInfo.totalPrice != undefined){
+  		var totalPrice = this.props.cartInfo.totalPrice;
+  		var totalItems = this.props.cartInfo.totalItems;
+  	}else{
+  		var totalPrice = 0.00;
+  		var totalItems = 0;
+  	}
+
+	console.log(totalPrice)
+	console.log(totalItems)
+
   	// Temp var to store our <link>
   	const shopMenu = [];
   	// Map through this.state.productlines. First render, will not loop (because array is empty)
   	this.state.productlines.map((pl,index)=>{
-  		console.log(pl)
+  		// console.log(pl)
   		shopMenu.push(
   			<Link key={index} to={`/shop/${pl.link}`}>{pl.productLine}</Link>
   		)
@@ -42,10 +53,11 @@ class NavBar extends Component{
 	}else{
 		var rightBar = [
 			<li key="1" className="text-right">Welcome, {this.props.registerInfo.name}</li>,
-			<li key="2" className="text-right"><Link to="/cart">(0) items in your cart | ($0.00)</Link></li>,
-			<li key="3" className="text-right"><Link to="/logout">Logout</Link></li>		
+			<li key="2" className="text-right"><Link to="/cart">({totalItems}) items in your cart | (${totalPrice})</Link></li>,	
+			<li key="3" className="text-right"><Link to="/logout">Logout</Link></li>	
 		]		
 	}
+
 
     return(
     	<div>
@@ -75,7 +87,6 @@ class NavBar extends Component{
 				   </ul>
 			  </div>
 			</nav>
-	        
         </div>
 	)
   }
@@ -83,12 +94,13 @@ class NavBar extends Component{
 
 function mapStateToProps(state){
 	return{
-		registerInfo: state.registerReducer
+		registerInfo: state.registerReducer,
+		cartInfo: state.cartReducer
 	}
 }
 
 // export default NavBar
-// export default connect(mapStateToProps)(NavBar)
 var connectVersion = connect(mapStateToProps);
 var exportedComp = connectVersion(NavBar)
 export default exportedComp;
+// export default connect(mapStateToProps)(NavBar

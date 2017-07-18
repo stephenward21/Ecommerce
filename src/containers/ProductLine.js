@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
 import ProductTableRow from '../components/ProductTableRow';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import UpdateCart from '../actions/UpdateCart';
 
 class ProductLine extends Component {
 	constructor(props) {
@@ -59,10 +62,22 @@ class ProductLine extends Component {
 	}
 
 	render(){
+		console.log(this.props.loginInfo)
+		if(this.props.loginInfo.token != undefined){
+			// these are the droids we're looking for
+			var loggedIn = true;
+			var token = this.props.loginInfo.token
+		}else{
+			var loggedIn = false;
+			var token = null
+		}
+
 		
 		var productTableArray = [];
 		this.state.productList.map((product, index)=>{
-			productTableArray.push(<ProductTableRow key={index} product={product} />)
+			productTableArray.push(
+				<ProductTableRow key={index} product={product} addToCart={this.props.updateCart} loggedIn={loggedIn} token={token} />
+			)
 
 		});
 
@@ -97,4 +112,16 @@ class ProductLine extends Component {
 
 }
 
-export default ProductLine;
+function mapStateToProps(state){
+	return {
+		loginInfo: state.registerReducer
+	}
+}
+
+function mapDispatchToProps(dispatch){
+	return bindActionCreators({
+		updateCart: UpdateCart
+	}, dispatch)
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(ProductLine);

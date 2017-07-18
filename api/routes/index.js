@@ -42,9 +42,59 @@ router.get('/productlines/:productLines/get', (req,res)=>{
 	});
 })
 
+router.post('/getCart',(req, res)=>{
+	const getUidQuery = `SELECT id from users WHERE token = ?`
+	connection.query(getUidQuery,[req.body.token],(error,results)=>{
+		const getCartTotals = `SELECT SUM(buyPrice) as totalPrice, count(buyPrice) as totalItems FROM cart 
+			INNER JOIN products ON products.productCode = cart.productCode WHERE uid=?`
+		connection.query(getCartTotals,[results[0].id],(error3,results3)=>{
+			if(error3){
+				res.json(error3)
+			}else{
+				const getCartContents = `SELECT * FROM cart
+				INNER JOIN products on products.productCode = cart.productCode 
+				WHERE uid = ?`
+				connection.query(getCartContents,[results[0].id],(error4,results4)=>{
+					var finalCart = results3[0];
+					finalCart.products = results4
+					res.json(finalCart);
+				})
+			}
+		})
+
+	})
+})
+
+router.post('/updateCart', (req, res)=>{
+	console.log(req.body)
+	const getUidQuery = `SELECT id from users WHERE token = ?`
+	connection.query(getUidQuery,[req.body.token],(error,results)=>{
+		if(error) throw error;
+		if(results.length == 0 ){
+			res.json({msg:"badToken"})
+		}else{
+			const addToCartQuery = `INSERT INTO cart (uid,productCode) 
+				VALUES (?,?)`;
+			connection.query(addToCartQuery,[results[0].id,req.body.productCode],(error2,results2)=>{
+				const getCartTotals = `SELECT SUM(buyPrice) as totalPrice, count(buyPrice) as totalItems FROM cart 
+					INNER JOIN products ON products.productCode = cart.productCode WHERE uid=?`
+				connection.query(getCartTotals,[results[0].id],(error3,results3)=>{
+					if(error3){
+						res.json(error3)
+					}else{
+						res.json(results3[0]);
+					}
+				})
+			})
+		}
+	});
+
+});
+
 
 router.post('/register', (req,res)=>{
 	console.log(req.body)
+	const salesRepQ = "SELECT firstName, lastName FROM employees WHERE jobTitle = Sales Rep"
 
 	const name = req.body.name;
 	const email = req.body.email;
@@ -54,6 +104,8 @@ router.post('/register', (req,res)=>{
 	const state = req.body.state;
 	const salesRep = req.body.salesRep;
 	const creditLimit = 1600000
+
+	
 
 	const checkEmail = new Promise((resolve, reject) => {
 		const checkEmailQuery = "SELECT * FROM users WHERE email = ?";
@@ -107,16 +159,17 @@ router.post('/login', (req,res)=>{
 	var checkLoginQuery = "SELECT * FROM users WHERE username = ?"
 	connection.query(checkLoginQuery, [username], (error,results)=>{
 		if(error) throw error;
-		if(results.length == 0){
+		if(results.length === 0){
 			res.json({
 				msg: "badUsername"
 			})
 		}else{
 			var checkHash = bcrypt.compareSync(password, results[0].password);
 			if(checkHash){
-				const updateToken = `Update users SET token=?, token_exp=DATE_ADD(NOW(), INTERVAL 1 HOUR)`
+				const updateToken = `Update users SET token=?, token_exp=DATE_ADD(NOW(), INTERVAL 1 HOUR)
+					WHERE username = ?`
 				var token = randToken.uid(40);
-				connection.query(updateToken, [token], (results2, error2)=>{
+				connection.query(updateToken, [token,userName], (results2, error2)=>{
 					res.json({
 						msg:'loginSuccess',
 						name: results[0].name,
