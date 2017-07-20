@@ -107,7 +107,7 @@ class Register extends Component{
 				    <label><b>State</b></label>
 				    <input type="text" className="form-control" id="exampleState" aria-describedby="stateHelp" placeholder="State"/>
 
-				    <label for="sell">Select Sales Rep</label>
+				    <label htmlFor="sell">Select Sales Rep</label>
 				    <select className="form-control" id="sell">
 				    	<option>1</option>
 				    	<option>2</option>

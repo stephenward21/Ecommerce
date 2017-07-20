@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import RegisterAction from '../actions/RegisterAction';
+// import RegisterAction from '../actions/RegisterAction';
 import LoginAction from '../actions/LoginAction';
 import GetCart from '../actions/GetCart'
 
@@ -23,8 +23,7 @@ class Login extends Component{
 		var userName = event.target[0].value
 		var password = event.target[1].value;
 		var error = false;
-		console.log(userName)
-		console.log(password)
+		
 	
 
 		if(password.length == 0){
@@ -51,7 +50,7 @@ class Login extends Component{
 		}else{
 			this.props.loginAction({
 				username: userName,
-				password: password,
+				password: password
 			
 			});
 		}
@@ -60,7 +59,8 @@ class Login extends Component{
 
 	componentWillReceiveProps(nextProps) {
 		console.log("=======================")
-		console.log(nextProps.registerResponse)
+		console.log(nextProps)
+		// console.log(nextProps.registerResponse.responseJSON.msg)
 		console.log("=======================")
 
 		if(nextProps.registerResponse.msg == 'loginSuccess'){
@@ -80,11 +80,11 @@ class Login extends Component{
 				<h1 className="text-danger">{this.state.registerMessage}</h1>
 				<form onSubmit={this.handleLogin}>
 				  <div className="form-group">
-				    <label for="exampleInputEmail1">Username</label>
+				    <label htmlFor="exampleInputEmail1">Username</label>
 				    <input type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Username"/>
 				  </div>
 				  <div className="form-group">
-				    <label for="exampleInputPassword1">Password</label>
+				    <label htmlFor="exampleInputPassword1">Password</label>
 				    <input type="password" className="form-control" id="exampleInputPassword1" placeholder="Password"/>
 				  </div>
 				  <button type="submit" className="btn btn-primary">Log In</button>

@@ -7,6 +7,7 @@ import Register from './containers/Register';
 import Login from './containers/Login';
 import SimpleSlider from './components/SimpleSlider';
 import ProductLine from './containers/ProductLine';
+import Cart from './containers/Cart';
 
 
 class App extends Component {
@@ -21,6 +22,7 @@ class App extends Component {
     				<Route exact path="/register" component={Register} />
     				<Route exact path="/login" component={Login} />
     				<Route path="/shop/:productLine" component={ProductLine} />
+                    <Route path="/cart" component={Cart} />
     			</div>
     		</div>
     	</Router>

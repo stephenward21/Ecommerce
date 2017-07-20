@@ -135,11 +135,12 @@ router.post('/register', (req,res)=>{
 					if(error2){
 						msg: error2
 					}else{
-						res.json({
+						var registerResponse = res.json({
 							msg: "userInserted",
 							token: token,
 							name: name
 						});
+						console.log(registerResponse)
 					}
 				});
 			});
@@ -156,8 +157,12 @@ router.post('/register', (req,res)=>{
 router.post('/login', (req,res)=>{
 	var userName = req.body.username;
 	var password = req.body.password;
-	var checkLoginQuery = "SELECT * FROM users WHERE username = ?"
-	connection.query(checkLoginQuery, [username], (error,results)=>{
+
+	var checkLoginQuery = `SELECT * FROM users 
+		INNER JOIN customers ON users.uid = customers.customerNumber
+		WHERE username = ?`;
+	connection.query(checkLoginQuery, [userName], (error,results)=>{
+		// console.log(results)
 		if(error) throw error;
 		if(results.length === 0){
 			res.json({
@@ -169,12 +174,14 @@ router.post('/login', (req,res)=>{
 				const updateToken = `Update users SET token=?, token_exp=DATE_ADD(NOW(), INTERVAL 1 HOUR)
 					WHERE username = ?`
 				var token = randToken.uid(40);
-				connection.query(updateToken, [token,userName], (results2, error2)=>{
+				connection.query(updateToken, [token,userName], (error2, results2)=>{
+					console.log(results)
 					res.json({
 						msg:'loginSuccess',
-						name: results[0].name,
+						name: results[0].customerName,
 						token: token
 					})
+
 				})
 
 			}else{

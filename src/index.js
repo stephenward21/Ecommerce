@@ -6,7 +6,6 @@ import Home from './containers/Home';
 
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import reducers from './reducers/rootReducer';
 import RootReducer from './reducers/rootReducer';
 import reduxPromise from 'redux-promise';
 
