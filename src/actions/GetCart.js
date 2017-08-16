@@ -12,7 +12,6 @@ export default function(token){
 	});
 	return {
 		type: "UPDATE_CART",
-		payload: thePromise2
+		payLoad: thePromise
 	}
-
 }

@@ -2,6 +2,7 @@
 
 export default function(state = [], action){
 	if(action.type == "REGISTER"){
+		console.log(action.payLoad)
 		return action.payLoad;
 	}else{
 		return state;

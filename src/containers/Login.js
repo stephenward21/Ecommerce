@@ -1,9 +1,14 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-// import RegisterAction from '../actions/RegisterAction';
+import React, {Component} from 'react';
+import { Form, FormGroup, ControlLabel, FormControl, Button, Col ,MenuItem} from 'react-bootstrap'
+// Our action needs bindActionCreators from redux
+import  {bindActionCreators} from 'redux';
+// Get the registerAction function which runs on submission
 import LoginAction from '../actions/LoginAction';
-import GetCart from '../actions/GetCart'
+import GetCart from  '../actions/GetCart'
+// Because this is a container, we need connect from react-redux!
+import {connect} from 'react-redux';
+
+
 
 class Login extends Component{
 	constructor(props) {
@@ -11,7 +16,7 @@ class Login extends Component{
 		this.state = {
 			registerMessage: "",
 			passwordError: null,
-			userNameError: null,
+			emailError: null,
 			formError: false
 		}
 		this.handleLogin = this.handleLogin.bind(this);
@@ -19,48 +24,43 @@ class Login extends Component{
 
 	handleLogin(event){
 		event.preventDefault();
-		console.log('User Submitted the Form');
-		var userName = event.target[0].value
-		var password = event.target[1].value;
+		// console.log("User SUbmitted the form!!")
+		var email = event.target[0].value
+		var password = event.target[1].value
 		var error = false;
-		
-	
 
+		//Password
 		if(password.length == 0){
-			var passwordError = "error"; 
+			var passwordError = "error";
 			error=true;
 		}
 		else{ 
 			var passwordError = "null"
 		}
 
-		//Username
-		if(userName.length < 3){var userNameError = "error"; error=true}
-		else{var userNameError = "success"}
+		//Email
+		if(email.length < 3){var emailError = "error"; error=true}
+		else{var emailError = "success"}
 
 
 		// console.log(name);
 		if(error){
 			this.setState({
 				formError: true,
-				userNameError: userNameError,
+				emailError: emailError,
 				passwordError: passwordError
 			}) 
-		// console.log(salesRep)
 		}else{
 			this.props.loginAction({
-				username: userName,
+				email: email,
 				password: password
-			
 			});
 		}
-
 	}
 
 	componentWillReceiveProps(nextProps) {
 		console.log("=======================")
-		console.log(nextProps)
-		// console.log(nextProps.registerResponse.responseJSON.msg)
+		console.log(nextProps.registerResponse)
 		console.log("=======================")
 
 		if(nextProps.registerResponse.msg == 'loginSuccess'){
@@ -75,25 +75,41 @@ class Login extends Component{
 	}
 
 	render(){
-		return (
-			<div className="login">
+
+		// this.setState({
+		// 	bad: ""
+		// })
+
+		return(
+			<div className="register-wrapper">
 				<h1 className="text-danger">{this.state.registerMessage}</h1>
-				<form onSubmit={this.handleLogin}>
-				  <div className="form-group">
-				    <label htmlFor="exampleInputEmail1">Username</label>
-				    <input type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Username"/>
-				  </div>
-				  <div className="form-group">
-				    <label htmlFor="exampleInputPassword1">Password</label>
-				    <input type="password" className="form-control" id="exampleInputPassword1" placeholder="Password"/>
-				  </div>
-				  <button type="submit" className="btn btn-primary">Log In</button>
-				</form>
+				<Form horizontal onSubmit={this.handleLogin}>
+					<FormGroup controlId="formHorizontalName" validationState={this.state.nameError}>
+						<Col componentClass={ControlLabel} sm={2}>
+							Email
+						</Col>
+						<Col sm={10}>
+							<FormControl type="email" name="email" placeholder="Email" />
+						</Col>
+					</FormGroup>
+					<FormGroup controlId="formHorizontalName" validationState={this.state.emailError}>
+						<Col componentClass={ControlLabel} sm={2}>
+							Password
+						</Col>
+						<Col sm={10}>
+							<FormControl type="password" name="password" placeholder="Password" />
+						</Col>
+					</FormGroup>
+					<FormGroup>
+						<Col smOffset={2} sm={10}>
+							<Button bsStyle="success" bsSize="small" type="submit">
+								Login
+							</Button>
+						</Col>
+					</FormGroup>
+				</Form>
 			</div>
-
-
 		)
-	
 	}
 }
 

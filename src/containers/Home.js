@@ -1,6 +1,6 @@
 
 import React, {Component} from 'react';
-import $ from 'jquery';
+import $ from 'jquery'
 import {Link} from 'react-router-dom';
 
 class Home extends Component{
@@ -9,10 +9,9 @@ class Home extends Component{
 		this.state = {
 			productlines: []
 		}
-		
 	}
-
 	componentDidMount() {
+		// get all productLine info... we already set this up in the navbar
 		$.getJSON(window.hostAddress+'/productlines/get',(productlinesData)=>{
 			console.log(productlinesData);
 			this.setState({
@@ -23,57 +22,20 @@ class Home extends Component{
 
 	render(){
 		const plImages = [];
+		// loop through the productlines from the DB
 		this.state.productlines.map((row, index)=>{
 			plImages.push(
 				<div key={index} className="col-sm-4 col-md-3 pl-images">
-					<Link to={`/shop/${row.link}`}><img src={row.image}/></Link>
+					<Link to={`/shop/${row.link}`}><img src={row.image} /></Link>
 					<div className="text">{row.productLine}</div>
-
 				</div>
-
 			)
 		})
 		return(
 			<div>
 				{plImages}
 			</div>
-
 		)
-		// return(
-		// 	<div>
-		// 		<h1>Models</h1>
-		// 		<div className='container'>
-		// 			<a className='shop-images' href="http://placeholder.com"><img src="http://via.placeholder.com/200x200" /></a>
-		// 			<a className='shop-images' href="http://placeholder.com"><img src="http://via.placeholder.com/200x200" /></a>
-		// 			<a className='shop-images' href="http://placeholder.com"><img src="http://via.placeholder.com/200x200" /></a>
-		// 			<a className='shop-images' href="http://placeholder.com"><img src="http://via.placeholder.com/200x200" /></a>
-		// 			<a className='shop-images' href="http://placeholder.com"><img src="http://via.placeholder.com/200x200" /></a>
-		// 			<a className='shop-images' href="http://placeholder.com"><img src="http://via.placeholder.com/200x200" /></a>
-		// 			<a className='shop-images' href="http://placeholder.com"><img src="http://via.placeholder.com/200x200" /></a>
-		// 		</div>
-		// 		<br />
-		// 		<div className='featured-models'>
-		// 			<h2>Featured Products</h2>
-		// 			<a className='featured-images' href="http://placeholder.com"><img src="http://via.placeholder.com/200x200" /></a>
-		// 			<a className='featured-images' href="http://placeholder.com"><img src="http://via.placeholder.com/200x200" /></a>
-		// 			<a className='featured-images' href="http://placeholder.com"><img src="http://via.placeholder.com/200x200" /></a>
-		// 			<a className='featured-images' href="http://placeholder.com"><img src="http://via.placeholder.com/200x200" /></a>
-		// 		</div>
-		// 		<div className='featured-models'>
-		// 			<a className='featured-images' href="http://placeholder.com"><img src="http://via.placeholder.com/200x200" /></a>
-		// 			<a className='featured-images' href="http://placeholder.com"><img src="http://via.placeholder.com/200x200" /></a>
-		// 			<a className='featured-images' href="http://placeholder.com"><img src="http://via.placeholder.com/200x200" /></a>
-		// 			<a className='featured-images' href="http://placeholder.com"><img src="http://via.placeholder.com/200x200" /></a>
-		// 		</div>
-		// 		<div className='featured-models'>
-		// 			<a className='featured-images' href="http://placeholder.com"><img src="http://via.placeholder.com/200x200" /></a>
-		// 			<a className='featured-images' href="http://placeholder.com"><img src="http://via.placeholder.com/200x200" /></a>
-		// 			<a className='featured-images' href="http://placeholder.com"><img src="http://via.placeholder.com/200x200" /></a>
-		// 			<a className='featured-images' href="http://placeholder.com"><img src="http://via.placeholder.com/200x200" /></a>
-		// 		</div>
-			
-		// 	</div>
-		// )
 	}
 }
 

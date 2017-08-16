@@ -1,6 +1,6 @@
-import React from 'react';
+import React from 'react'
 
-function ProductTableRow(props) {
+function ProductTableRow(props){
 	const product = props.product
 	if(product.quantityInStock > 100){
 		var inStockClass = "";
