@@ -110,6 +110,11 @@ form {
   margin-top: 60px;
 }
 
+.prod-background {
+    background-image: linear-gradient(rgba(35,35,35,0.8),rgba(35,35,35,0.8)), url("https://www.casino.org/blog/wp-content/uploads/roulette-wheel.jpg");
+
+}
+
 .text {
   color: #121212;
   margin-bottom: 15px;

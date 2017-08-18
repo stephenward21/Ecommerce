@@ -95,7 +95,7 @@ class ProductLine extends Component{
 		}
 
 		return(
-			<div>
+			<div className="prod-background">
 				<h1>{textHeader}</h1>
 				<table className="table table-striped">
 					<thead>
